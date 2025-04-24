@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+        }
+        img {
+            margin-top: 20px;
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to the Test Page</h1>
+    </header>
+    <main>
+        <p>This is a dummy page for testing purposes.</p>
+        <p>Application is running with context path: <span th:text="@{/}">context path</span></p>
+        <img th:src="@{/images/placeholder.svg}" alt="Local Placeholder Image">
+    </main>
+</body>
+</html>
