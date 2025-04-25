@@ -1,0 +1,97 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-demo-foo
+  labels:
+    app: spring-demo-foo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spring-demo-foo
+  template:
+    metadata:
+      labels:
+        app: spring-demo-foo
+    spec:
+      containers:
+      - name: spring-demo-foo
+        image: spring-demo:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+        env:
+        - name: SPRING_APPLICATION_NAME
+          value: "demo-foo"
+        - name: SERVER_SERVLET_CONTEXT_PATH
+          value: "/foo"
+        - name: SERVER_PORT
+          value: "8080"
+        resources:
+          limits:
+            cpu: "0.5"
+            memory: "512Mi"
+          requests:
+            cpu: "0.2"
+            memory: "256Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: spring-demo-foo
+spec:
+  selector:
+    app: spring-demo-foo
+  ports:
+  - port: 8080
+    targetPort: 8080
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-demo-bar
+  labels:
+    app: spring-demo-bar
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spring-demo-bar
+  template:
+    metadata:
+      labels:
+        app: spring-demo-bar
+    spec:
+      containers:
+      - name: spring-demo-bar
+        image: spring-demo:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+        env:
+        - name: SPRING_APPLICATION_NAME
+          value: "demo-bar"
+        - name: SERVER_SERVLET_CONTEXT_PATH
+          value: "/bar"
+        - name: SERVER_PORT
+          value: "8080"
+        resources:
+          limits:
+            cpu: "0.5"
+            memory: "512Mi"
+          requests:
+            cpu: "0.2"
+            memory: "256Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: spring-demo-bar
+spec:
+  selector:
+    app: spring-demo-bar
+  ports:
+  - port: 8080
+    targetPort: 8080
+  type: ClusterIP

@@ -32,6 +32,30 @@
         <p>This is a dummy page for testing purposes.</p>
         <p>Application is running with context path: <span th:text="@{/}">context path</span></p>
         <img th:src="@{/images/placeholder.svg}" alt="Local Placeholder Image">
+        
+        <div id="api-response" style="margin-top: 30px; padding: 15px; background-color: #f0f0f0; border-radius: 5px;">
+            <h2>API Response</h2>
+            <p id="hello-message">Loading message from server...</p>
+            <button onclick="fetchHelloMessage()" style="padding: 8px 15px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;">Refresh</button>
+        </div>
     </main>
+
+    <script>
+        function fetchHelloMessage() {
+            document.getElementById('hello-message').textContent = 'Loading message from server...';
+            
+            fetch('/hello')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('hello-message').textContent = data.message;
+                })
+                .catch(error => {
+                    document.getElementById('hello-message').textContent = 'Error fetching message: ' + error.message;
+                });
+        }
+
+        // Fetch the message when the page loads
+        document.addEventListener('DOMContentLoaded', fetchHelloMessage);
+    </script>
 </body>
 </html>
